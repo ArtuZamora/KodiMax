@@ -6,3 +6,11 @@ C:\Users\r2zam\OneDrive\Documentos\Kodigo\C#\Proyecto_POO_Rafael_Zamora\Proyecto
 C:\Users\r2zam\OneDrive\Documentos\Kodigo\C#\Proyecto_POO_Rafael_Zamora\Proyecto_POO_Rafael_Zamora\obj\Debug\Proyecto_POO_Rafael_Zamora.pdb
 C:\Users\r2zam\OneDrive\Documentos\Kodigo\C#\Proyecto_POO_Rafael_Zamora\Proyecto_POO_Rafael_Zamora\bin\Debug\Newtonsoft.Json.dll
 C:\Users\r2zam\OneDrive\Documentos\Kodigo\C#\Proyecto_POO_Rafael_Zamora\Proyecto_POO_Rafael_Zamora\bin\Debug\Newtonsoft.Json.xml
+C:\Users\r2zam\OneDrive\Documentos\Kodigo\C#\Kodi-Max\KodiMax\Proyecto_POO_Rafael_Zamora\bin\Debug\Proyecto_POO_Rafael_Zamora.exe.config
+C:\Users\r2zam\OneDrive\Documentos\Kodigo\C#\Kodi-Max\KodiMax\Proyecto_POO_Rafael_Zamora\obj\Debug\Proyecto_POO_Rafael_Zamora.exe
+C:\Users\r2zam\OneDrive\Documentos\Kodigo\C#\Kodi-Max\KodiMax\Proyecto_POO_Rafael_Zamora\obj\Debug\Proyecto_POO_Rafael_Zamora.pdb
+C:\Users\r2zam\OneDrive\Documentos\Kodigo\C#\Kodi-Max\KodiMax\Proyecto_POO_Rafael_Zamora\bin\Debug\Proyecto_POO_Rafael_Zamora.exe
+C:\Users\r2zam\OneDrive\Documentos\Kodigo\C#\Kodi-Max\KodiMax\Proyecto_POO_Rafael_Zamora\bin\Debug\Proyecto_POO_Rafael_Zamora.pdb
+C:\Users\r2zam\OneDrive\Documentos\Kodigo\C#\Kodi-Max\KodiMax\Proyecto_POO_Rafael_Zamora\bin\Debug\Newtonsoft.Json.dll
+C:\Users\r2zam\OneDrive\Documentos\Kodigo\C#\Kodi-Max\KodiMax\Proyecto_POO_Rafael_Zamora\bin\Debug\Newtonsoft.Json.xml
+C:\Users\r2zam\OneDrive\Documentos\Kodigo\C#\Kodi-Max\KodiMax\Proyecto_POO_Rafael_Zamora\obj\Debug\Proyecto_POO_Rafael_Zamora.csprojResolveAssemblyReference.cache

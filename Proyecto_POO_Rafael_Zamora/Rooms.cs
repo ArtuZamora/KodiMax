@@ -9,6 +9,7 @@ namespace Proyecto_POO_Rafael_Zamora
     public abstract class Rooms
     {
         #region Properties
+        public string Name { get; set; }
         public int Columns { get; set; }
         public int Rows { get; set; }
         public int ActualColumn { get; set; }
@@ -71,6 +72,7 @@ namespace Proyecto_POO_Rafael_Zamora
         #region Constructor
         public Standard()
         {
+            Name = "Sala estándar";
             Columns = 8;
             Rows = 8;
             tickets = new MovieTicket[Rows, Columns];
@@ -85,12 +87,12 @@ namespace Proyecto_POO_Rafael_Zamora
         #region Constructor
         public Premium()
         {
+            Name = "Sala premium";
             Columns = 8;
             Rows = 5;
             tickets = new MovieTicket[Rows, Columns];
             ActualColumn = 0;
             ActualRow = 0;
-            Price = 3.55;
             Price = 4.75;
         }
         #endregion
@@ -100,13 +102,28 @@ namespace Proyecto_POO_Rafael_Zamora
         #region Constructor
         public VIP()
         {
+            Name = "Sala VIP";
             Columns = 6;
             Rows = 5;
             tickets = new MovieTicket[Rows, Columns];
             ActualColumn = 0;
             ActualRow = 0;
-            Price = 3.55;
             Price = 6.50;
+        }
+        #endregion
+    }
+    public class DriveIn : Rooms
+    {
+        #region Constructor
+        public DriveIn()
+        {
+            Name = "AutoCine";
+            Columns = 50;
+            Rows = 50;
+            tickets = new MovieTicket[Rows, Columns];
+            ActualColumn = 0;
+            ActualRow = 0;
+            Price = 8.25;
         }
         #endregion
     }

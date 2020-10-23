@@ -20,13 +20,19 @@ namespace Proyecto_POO_Rafael_Zamora
             str.Append("    4- Modificar Cartelera\n\n");
             str.Append("    5- Modificar Tienda de Golosinas\n\n");
             str.Append("    6- Generar Reportes\n\n");
-            str.Append("    7- Cerrar sesión\n\n");
+            str.Append("    7- Agregar Sucursales\n\n");
+            str.Append("    8- Modificar Sucursales\n\n");
+            str.Append("    9- Modificar Precio de Autocine\n\n");
+            str.Append("    10- Cerrar sesión\n\n");
             str.Append("   Ingrese opción deseada: ");
 
             str1.Append("++++++++++++ MENU EMPLEADO ++++++++++++\n");
             str1.Append("    1- Modificar Cartelera\n\n");
             str1.Append("    2- Modificar Tienda de Golosinas\n\n");
-            str1.Append("    3- Cerrar sesión\n\n");
+            str1.Append("    3- Agregar Sucursales\n\n");
+            str1.Append("    4- Modificar Sucursales\n\n");
+            str1.Append("    5- Modificar Precio de Autocine\n\n");
+            str1.Append("    6- Cerrar sesión\n\n");
             str1.Append("   Ingrese opción deseada: ");
 
             str2.Append("++++++++++++ MENU CLIENTE ++++++++++++\n");
@@ -34,7 +40,8 @@ namespace Proyecto_POO_Rafael_Zamora
             str2.Append("    2- Ver tienda de golosinas\n\n");
             str2.Append("    3- Comprar boletos\n\n");
             str2.Append("    4- Comprar golosinas\n\n");
-            str2.Append("    5- Cerrar sesión\n\n");
+            str2.Append("    5- Ver sucursales\n\n");
+            str2.Append("    6- Cerrar sesión\n\n");
             str2.Append("   Ingrese opción deseada: ");
         }
         public static void SuperUser()

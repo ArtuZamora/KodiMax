@@ -125,6 +125,7 @@ namespace Proyecto_POO_Rafael_Zamora
                 Console.WriteLine(" U - Reporte de Usuarios\n");
                 Console.WriteLine(" C - Reporte de Peliculas\n");
                 Console.WriteLine(" G - Reporte de Golosinas\n");
+                Console.WriteLine(" V - Reporte de Ventas por Sucursal\n");
                 Console.Write("  Ingrese opcion deseada: ");
                 string opt = Console.ReadLine();
                 switch (opt)
@@ -156,10 +157,34 @@ namespace Proyecto_POO_Rafael_Zamora
                         File.WriteAllText(@"C:\\JSON\\Candies.json", JSON);
                         Console.WriteLine("JSON Generado exitosamente, URL: C:\\JSON\\Candies.json");
                         break;
+                    case "V":
+                        JSON = JsonConvert.SerializeObject(Program.stdRoom.tickets);
+                        string JSON1 = JsonConvert.SerializeObject(Program.premRoom.tickets);
+                        string JSON2 = JsonConvert.SerializeObject(Program.vipRoom.tickets);
+                        string JSON3 = JsonConvert.SerializeObject(Program.driveIn.tickets);
+                        if (!Directory.Exists("C:\\JSON"))
+                        {
+                            Directory.CreateDirectory("C:\\JSON");
+                        }
+                        File.WriteAllText(@"C:\\JSON\\Sells.json", JSON + "\n" + JSON1 + "\n" + JSON2 + "\n" + JSON3 + "\n");
+                        Console.WriteLine("JSON Generado exitosamente, URL: C:\\JSON\\Sells.json");
+                        break;
                     default:
                         Console.WriteLine("Opción no contemplada");
                         break;
                 }
+            }
+            public static void Option7()
+            {
+                AddBranchOffice();
+            }
+            public static void Option8()
+            {
+                ModifyBranchOffice();
+            }
+            public static void Option9()
+            {
+                ModifyPrices();
             }
         }
         public static class ClientOpt
@@ -217,19 +242,50 @@ namespace Proyecto_POO_Rafael_Zamora
                     Console.WriteLine("Duración de la película: {0}", movie.Duration);
                     Console.WriteLine("Tipo de la película: {0}", movie.Type);
                     Console.WriteLine("---------------------------------");
+                    Console.WriteLine("\nSucursales: ");
+                    if(BranchData.officeBranches.Count == 0)
+                    {
+                        Console.WriteLine("No existen sucursales disponibles en este momento.");
+                        return;
+                    }
+                    foreach (Branch office in BranchData.officeBranches)
+                    {
+                        Console.WriteLine("--------------------------------");
+                        Console.WriteLine("ID de la sucursal: {0}", office.ID);
+                        Console.WriteLine("Nombre de la sucursal: {0}", office.Name);
+                        Console.WriteLine("--------------------------------");
+                    }
+                    Branch selectOffice = null;
+                    Console.Write("Ingrese el ID de la sucursal: ");
+                BranchAgain:
+                    string bID = Console.ReadLine();
+                    foreach (Branch office in BranchData.officeBranches)
+                    {
+                        if(office.ID == bID)
+                        {
+                            selectOffice = office;
+                            break;
+                        }
+                    }
+                    if(selectOffice == null)
+                    {
+                        Console.WriteLine("Sucursal no encontrada. Ingrese nuevamente el ID: ");
+                        goto BranchAgain;
+                    }
                     Console.WriteLine("\nSalas de exhibición:");
                     Console.WriteLine(" 1 - Estándar\n");
                     Console.WriteLine(" 2 - Premium\n");
                     Console.WriteLine(" 3 - VIP\n");
+                    Console.WriteLine(" 4 - Autocine\n");
                     Console.Write("\nIngrese una opcion deseada: ");
                     do
                     {
                         validateOption();
-                        if (option < 1 || option > 3)
+                        if (option < 1 || option > 4)
                         {
                             Console.WriteLine("Ingrese una opcion correcta: ");
                         }
-                    } while (option != 1 && option != 2 && option != 3);
+                    } while (option < 1 || option > 4);
                     Console.Write("\nIngrese la cantidad de boletos a comprar: ");
                     int numOfTickets;
                     do
@@ -245,23 +301,23 @@ namespace Proyecto_POO_Rafael_Zamora
                     } while (numOfTickets <= 0);
                     bool space = true;
                     Rooms room = null;
-                    string roomStr = "";
                     switch (option)
                     {
                         case 1:
                             room = Program.stdRoom;
-                            roomStr = "Estándar";
                             break;
                         case 2:
                             room = Program.premRoom;
-                            roomStr = "Premium";
                             break;
                         case 3:
                             room = Program.vipRoom;
-                            roomStr = "VIP";
+                            break;
+                        case 4:
+                            room = Program.driveIn;
                             break;
                     }
-                    space = room.ValidateSpaces(numOfTickets);
+                    if (option != 4) space = room.ValidateSpaces(numOfTickets);
+                    else space = true;
                     if (space)
                     {
                         MovieTicket ticket = new MovieTicket();
@@ -269,9 +325,10 @@ namespace Proyecto_POO_Rafael_Zamora
                         Billboard.ticketIdentity++;
                         ticket.MovieName = movie.Title;
                         ticket.TheatherName = "KODI-MAX";
-                        ticket.Room = roomStr;
+                        ticket.Room = room;
                         subtotal = room.Price * numOfTickets;
                         ticket.Date = DateTime.Now;
+                        ticket.branch = selectOffice;
                         Random rdn = new Random();
                         int countEmployees = 0;
                         foreach (User user in UserRepository.Users)
@@ -309,6 +366,7 @@ namespace Proyecto_POO_Rafael_Zamora
                             room.AddTicket(ticket);
                         }
                         double tax = Math.Round(subtotal * 0.3533, 2);
+                        double optPayment = 0;
                         total = Math.Round(subtotal + tax, 2);
                         Console.WriteLine("\n\n>Impresión del ticket<");
                         Console.WriteLine("------------------------------------------------------------------");
@@ -317,9 +375,20 @@ namespace Proyecto_POO_Rafael_Zamora
                         Console.WriteLine("ID del empleado que lo atendió: {0}", ticket.EmployeeID);
                         Console.WriteLine("Fecha y hora de compra: {0}", ticket.Date);
                         Console.WriteLine("Nombre de la pelicula: {0}", ticket.MovieName);
-                        Console.WriteLine("Sala: {0}", ticket.Room);
-                        Console.WriteLine("Asientos: {0}", room.PrintSeats(ticket));
-                        Console.WriteLine("Subtotal: ${0}", Math.Round(subtotal, 2));
+                        Console.WriteLine("Nombre de la sucursal: {0}", ticket.branch.Name);
+                        if (option == 4)
+                        {
+                            Console.WriteLine("Modalidad: Autocine");
+                            Console.WriteLine("Precio de parqueo: $1.50");
+                            optPayment = 1.50;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Modalidad: Sala normal");
+                            Console.WriteLine("Sala: {0}", ticket.Room.Name);
+                            Console.WriteLine("Asientos: {0}", room.PrintSeats(ticket));
+                        }
+                        Console.WriteLine("Subtotal: ${0}", Math.Round(subtotal, 2) + optPayment);
                         Console.WriteLine("Impuesto aplicado (35.33%): ${0}", tax);
                         Console.WriteLine("Total: ${0}", total);
                         Console.WriteLine("------------------------------------------------------------------");
@@ -472,6 +541,22 @@ namespace Proyecto_POO_Rafael_Zamora
                     Console.WriteLine("\nEl producto indicado no existe");
                 }
             }
+            public static void Option5()
+            {
+                Console.Clear();
+                Console.WriteLine("-----> Sucursales KodiMax <-----\n");
+                if (BranchData.officeBranches.Count != 0)
+                {
+                    foreach (Branch office in BranchData.officeBranches)
+                    {
+                        Console.WriteLine("--------------------------------");
+                        Console.WriteLine("ID de la sucursal: {0}", office.ID);
+                        Console.WriteLine("Nombre de la sucursal: {0}", office.Name);
+                        Console.WriteLine("--------------------------------");
+                    }
+                }
+                else Console.WriteLine("No hay sucursales disponibles en este momento.");
+            }
         }
         public static class EmployeeOpt
         {
@@ -482,6 +567,18 @@ namespace Proyecto_POO_Rafael_Zamora
             public static void Option2()
             {
                 StoreModif();
+            }
+            public static void Option3()
+            {
+                AddBranchOffice();
+            }
+            public static void Option4()
+            {
+                ModifyBranchOffice();
+            }
+            public static void Option5()
+            {
+                ModifyPrices();
             }
         }
         #endregion
@@ -812,6 +909,71 @@ namespace Proyecto_POO_Rafael_Zamora
                 }
             }
         }
+        private static void AddBranchOffice()
+        {
+            Console.Clear();
+            Branch newBranchOffice = new Branch();
+            Console.WriteLine("---> Agregar nueva sucursal\n");
+            Console.Write("Ingrese el nombre de la sucursal: ");
+            newBranchOffice.Name = Console.ReadLine();
+            newBranchOffice.ID = string.Format("B{0,0:D4}", BranchData.branchIdentity);
+            BranchData.branchIdentity++;
+            BranchData.officeBranches.Add(newBranchOffice);
+            Console.WriteLine("\nSucursal agregada existosamente!");
+        }
+        private static void ModifyBranchOffice()
+        {
+            Console.Clear();
+            Console.WriteLine("---> Modificar sucursales\n");
+            Console.WriteLine("Sucursales existentes: ");
+            foreach (Branch office in BranchData.officeBranches)
+            {
+                Console.WriteLine("--------------------------------");
+                Console.WriteLine("ID de la sucursal: {0}", office.ID);
+                Console.WriteLine("Nombre de la sucursal: {0}", office.Name);
+                Console.WriteLine("--------------------------------");
+            }
+            if (BranchData.officeBranches.Count == 0)
+            {
+                Console.WriteLine(">No existen sucursales para modificar");
+            }
+            else
+            {
+                Console.Write("Ingrese el ID de la sucursal a modifcar: ");
+                Branch officetoM = ExistsOffice(Console.ReadLine());
+                if (officetoM != null)
+                {
+                    Console.WriteLine("Ingrese el nuevo nombre de la sucursal: ");
+                    officetoM.Name = Console.ReadLine();
+                    Console.WriteLine("\n\nSucursal modificada existosamente!");
+                }
+                else
+                {
+                    Console.WriteLine("El producto indicado no existe");
+                }
+            }
+        }
+        private static void ModifyPrices()
+        {
+            Console.Clear();
+            Console.WriteLine("---> Modificar precio de autocine\n");
+            Console.WriteLine("Precio actual: $" + Program.driveIn.Price);
+            Console.Write("\nIngrese el nuevo precio: $");
+            double price;
+            do
+            {
+                while (!Double.TryParse(Console.ReadLine(), out price))
+                {
+                    Console.WriteLine("\nPrecio inválido, ingrese de nuevo: $");
+                }
+                if (price < Program.premRoom.Price)
+                {
+                    Console.WriteLine("\nPrecio inválido (debe ser mayor a la de la sala mas cara), ingrese de nuevo: $");
+                }
+            } while (price < Program.premRoom.Price);
+            Program.driveIn.Price = price;
+            Console.WriteLine("\n\nPrecio modificado exitosamente!");
+        }
         #endregion
 
         #region Data Verification/Validation
@@ -844,6 +1006,17 @@ namespace Proyecto_POO_Rafael_Zamora
                 if(ID == product.ID)
                 {
                     return product;
+                }
+            }
+            return null;
+        }
+        private static Branch ExistsOffice(string ID)
+        {
+            foreach (Branch office in BranchData.officeBranches)
+            {
+                if (ID == office.ID)
+                {
+                    return office;
                 }
             }
             return null;

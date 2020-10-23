@@ -14,6 +14,7 @@ namespace Proyecto_POO_Rafael_Zamora
         public static Rooms stdRoom = new Standard();
         public static Rooms premRoom = new Premium();
         public static Rooms vipRoom = new VIP();
+        public static Rooms driveIn = new DriveIn();
         public static string[] AbecedaryRepo = new string[8] { "A", "B", "C", "D", "E", "F", "G", "H" };
         #endregion
 
@@ -32,13 +33,12 @@ namespace Proyecto_POO_Rafael_Zamora
                     do
                     {
                         validateOption();
-                        if(option < 1 || option > 7)
+                        if(option < 1 || option > 10)
                         {
                             Console.WriteLine("Ingrese una opcion correcta: ");
                         }
-                    } while (option != 1 && option != 2 && option != 3 &&
-                            option != 4 && option != 5 && option != 6 && option != 7);
-                    if (option != 7)
+                    } while (option < 1 || option > 10);
+                    if (option != 10)
                     {
                         AdminOptions();
                         Console.WriteLine(">Presione una tecla para continuar<");
@@ -51,13 +51,12 @@ namespace Proyecto_POO_Rafael_Zamora
                     do
                     {
                         validateOption();
-                        if (option < 1 || option > 5)
+                        if (option < 1 || option > 6)
                         {
                             Console.WriteLine("Ingrese una opcion correcta: ");
                         }
-                    } while (option != 1 && option != 2 && option != 3 &&
-                            option != 4 && option != 5);
-                    if (option != 5)
+                    } while (option < 1 || option > 6);
+                    if (option != 6)
                     {
                         ClientOptions();
                         Console.WriteLine(">Presione una tecla para continuar<");
@@ -70,12 +69,12 @@ namespace Proyecto_POO_Rafael_Zamora
                     do
                     {
                         validateOption();
-                        if (option < 1 || option > 3)
+                        if (option < 1 || option > 6)
                         {
                             Console.WriteLine("Ingrese una opcion correcta: ");
                         }
-                    } while (option != 1 && option != 2 && option != 3);
-                    if (option != 3)
+                    } while (option < 1 || option > 6);
+                    if (option != 6)
                     {
                         EmployeeOptions();
                         Console.WriteLine(">Presione una tecla para continuar<");
@@ -143,6 +142,15 @@ namespace Proyecto_POO_Rafael_Zamora
                 case 6:
                     Options.AdminOpt.Option6();
                     break;
+                case 7:
+                    Options.AdminOpt.Option7();
+                    break;
+                case 8:
+                    Options.AdminOpt.Option8();
+                    break;
+                case 9:
+                    Options.AdminOpt.Option9();
+                    break;
             }
         }
         private static void ClientOptions()
@@ -161,6 +169,9 @@ namespace Proyecto_POO_Rafael_Zamora
                 case 4:
                     Options.ClientOpt.Option4();
                     break;
+                case 5:
+                    Options.ClientOpt.Option5();
+                    break;
             }
         }
         private static void EmployeeOptions()
@@ -172,6 +183,15 @@ namespace Proyecto_POO_Rafael_Zamora
                     break;
                 case 2:
                     Options.EmployeeOpt.Option2();
+                    break;
+                case 3:
+                    Options.EmployeeOpt.Option3();
+                    break;
+                case 4:
+                    Options.EmployeeOpt.Option4();
+                    break;
+                case 5:
+                    Options.EmployeeOpt.Option5();
                     break;
             }
         }

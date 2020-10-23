@@ -81,7 +81,8 @@ namespace Proyecto_POO_Rafael_Zamora
         public string EmployeeID { get; set; }
         public DateTime Date { get; set; }
         public string MovieName { get; set; }
-        public string Room{ get; set; }
+        public Rooms Room{ get; set; }
+        public Branch branch { get; set; }
         #endregion
     }
 }
